@@ -54,11 +54,17 @@ describe("history focus in side layout", function()
         assert.equals(float, vim.api.nvim_get_current_win())
     end)
 
-    it("still redirects entry into the side history from the editor", function()
+    it("keeps focus when entering side history from the editor", function()
         vim.api.nvim_set_current_win(editor)
         vim.api.nvim_set_current_win(chat._layout:history_win())
         pump()
-        assert.equals(chat._layout:prompt_win(), vim.api.nvim_get_current_win())
+        assert.equals(chat._layout:history_win(), vim.api.nvim_get_current_win())
+    end)
+
+    it("does not register WinEnter callbacks for either chat buffer", function()
+        for _, panel in ipairs({ chat._history, chat._prompt }) do
+            assert.equals(0, #vim.api.nvim_get_autocmds({ event = "WinEnter", buffer = panel:buf() }))
+        end
     end)
 
     it("still permits navigation from the prompt into side history", function()

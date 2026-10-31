@@ -18,7 +18,7 @@ Use the [pi coding agent](https://pi.dev) without leaving Neovim — **π²**, a
 
 `pi2.nvim` runs `pi --mode rpc` in the background and gives you an in-editor workflow for project-aware prompts, reviewed edits, session resume, and extension prompts — plus a growing set of features that live here rather than upstream (see [Differences from upstream](#differences-from-upstream)).
 
-History buffers can also be displayed in external floating reading windows without focus jumping to the prompt; see [Chat & layouts](doc/usage.md#chat--layouts).
+Chat window navigation preserves the selected window and mode, including external floating history views; see [Chat & layouts](doc/usage.md#chat--layouts).
 
 > [!NOTE]
 > The project is named **pi2.nvim** (π²), but the Lua namespace, commands, and filetypes are unchanged for compatibility: you still `require("pi")`, use the `:Pi*` commands, and the buffers keep the `pi-chat-*` filetypes. Only the project / repository name differs.

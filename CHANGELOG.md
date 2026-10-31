@@ -2,7 +2,7 @@
 
 ## 2026-10-31
 
-- **FIXED:** External floating history views retain focus in side layout instead of redirecting to the prompt.
+- **FIXED:** Removed history and prompt `WinEnter` handlers. Window navigation keeps the selected window and mode, including external floating history views.
 
 ## 2026-10-27
 
