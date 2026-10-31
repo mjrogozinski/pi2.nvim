@@ -181,6 +181,11 @@ function Chat:_set_keymaps()
                 return
             end
 
+            -- External reading/zen views may show history in their own float.
+            if vim.api.nvim_win_get_config(0).relative ~= "" then
+                return
+            end
+
             local pwin = self._layout:prompt_win()
             local prev = vim.fn.win_getid(vim.fn.winnr("#"))
             if prev == pwin then

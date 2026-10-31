@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-31
+
+- **FIXED:** External floating history views retain focus in side layout instead of redirecting to the prompt.
+
 ## 2026-10-27
 
 - **FIXED:** A `/new` (`:PiNewSession`, `pi.new_session()`, a bare `/new` in the prompt such as `<C-g>n`) kept the previous conversation's todo list alive. Two independent causes: `start_new_session` reset every per-session mirror except `pi.todo`, and that mirror is keyed by the session object — which survives `/new` (only the backend session id migrates in place) — so the `:PiTodo` panel kept rendering the old list and the new conversation's first `todo_write` was even denied its `auto_open` (the stale non-empty snapshot made the empty→non-empty transition invisible); meanwhile the bundled extension held its list in module scope, and since `/new` re-invokes the extension factory without re-evaluating the module, `reconstruct()` found nothing in the fresh session and simply left the old `todos` in place, so every LLM call of the new conversation still received the `[todo] n/m completed …` context note. Both layers now reset: `pi.todo.on_conversation_replaced()` (called from `start_new_session` and from the session-file load path before the message replay) drops the mirror and any pending auto-open marker, and `reconstruct()` clears the list when neither the branch scan nor the `pi2-todo` checkpoint yields one. An auto-opened panel closes, a manually opened one shows the `no todos` placeholder, and a `:PiTree` branch without todo results clears the list instead of inheriting one. Regression-covered by `tests/todo_panel_new_session_spec.lua` and the real-process e2e `scripts/e2e/todo_new_session.lua`. See doc/usage.md#todo-list and doc/sessions.md#sub-sessions.

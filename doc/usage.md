@@ -46,6 +46,8 @@ Each chat contains three panels:
 | `prompt` | `pi-chat-prompt` | Where you type the next message. Multi-line buffer. |
 | `attachments` | `pi-chat-attachments` | Pending image attachments queued for the next message. |
 
+In side layout, entering the history pane from the editor redirects focus to the prompt. Navigating from the prompt to history remains available. External floating views of the history buffer (for example, a centered reading window) keep focus instead of redirecting to the prompt.
+
 The filetype names are stable — you can target them from your own `FileType` autocmds (see [Keymaps](keymaps.md) for an example). Input and info dialog buffers use the stable `pi-dialog` filetype, so completion plugins can be disabled there without affecting the prompt.
 
 Use `:PiToggleLayout` to swap `side` ↔ `float` without losing the conversation, and `:PiToggleChat` to hide and re-show the chat windows. Neither stops the agent. To actually shut down the underlying `pi --mode rpc` process for the current tab, use `:PiStop`.
