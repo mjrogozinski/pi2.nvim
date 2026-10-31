@@ -18,7 +18,11 @@ Use the [pi coding agent](https://pi.dev) without leaving Neovim — **π²**, a
 
 `pi2.nvim` runs `pi --mode rpc` in the background and gives you an in-editor workflow for project-aware prompts, reviewed edits, session resume, and extension prompts — plus a growing set of features that live here rather than upstream (see [Differences from upstream](#differences-from-upstream)).
 
-Chat window navigation preserves the selected window and mode, including external floating history views; see [Chat & layouts](doc/usage.md#chat--layouts).
+## Why this fork exists
+
+This fork of [`zgs225/pi2.nvim`](https://github.com/zgs225/pi2.nvim) removes the chat history and prompt `WinEnter` callbacks. Upstream redirects focus from the side history pane to the prompt and automatically enters Insert mode when the prompt gains focus. The history callback also interrupts external centered reading windows, such as a `Snacks.zen()` view opened with a custom `<leader>az` mapping: the response appears briefly, then focus jumps back to the prompt.
+
+Removing these callbacks keeps focus in the selected window and avoids automatic mode changes when navigating between panes. Centered response views work without temporarily suppressing Neovim events. The shortcut and reading-window width remain in the user's Neovim configuration. Upstream currently has no configuration switches to disable these callbacks; see [Chat & layouts](doc/usage.md#chat--layouts) for this fork's behavior.
 
 > [!NOTE]
 > The project is named **pi2.nvim** (π²), but the Lua namespace, commands, and filetypes are unchanged for compatibility: you still `require("pi")`, use the `:Pi*` commands, and the buffers keep the `pi-chat-*` filetypes. Only the project / repository name differs.
